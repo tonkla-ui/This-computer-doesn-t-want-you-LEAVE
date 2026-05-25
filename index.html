@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>THIS COMPUTER DOESN'T WANT YOU TO LEAVE</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="fx-layer-crt"></div>
+    <div id="fx-layer-scanlines"></div>
+    <div id="fx-layer-vignette"></div>
+    <div id="fx-layer-dust"></div>
+    <div id="fx-layer-noise"></div>
+    
+    <div id="screen-flash" class="hidden"></div>
+    <div id="transition-curtain"></div>
+
+    <div id="init-screen" class="view-state active">
+        <div class="pulse-text">> ESTABLISH CONNECTION <</div>
+    </div>
+
+    <div id="main-menu" class="view-state hidden">
+        <div class="menu-status" id="menu-status-text" data-i18n="menu_status">SYSTEM ACTIVE // MONITORING USER</div>
+        
+        <div class="menu-center">
+            <h1 class="cinematic-title">
+                <span class="flicker-slow abberation" data-i18n="title1">THIS COMPUTER</span><br>
+                <span class="flicker-subtle text-muted" data-i18n="title2">DOESN'T WANT YOU</span><br>
+                <span class="flicker-fast text-red abberation" data-i18n="title3">TO LEAVE</span>
+            </h1>
+            
+            <div class="menu-nav">
+                <button class="cinematic-btn" data-target="start" data-i18n="btn_start">START GAME</button>
+                <button class="cinematic-btn" data-target="tutorial" data-i18n="btn_tut">HOW TO PLAY</button>
+                <button class="cinematic-btn" data-target="settings" data-i18n="btn_set">SETTINGS</button>
+                <button class="cinematic-btn" data-target="credits" data-i18n="btn_cred">CREDITS</button>
+                <button class="cinematic-btn" data-target="exit" data-i18n="btn_exit">EXIT</button>
+            </div>
+        </div>
+
+        <div class="menu-footer">
+            <span class="version">v2.3.1_mobile_build</span>
+            <span class="copyright">© 199X SYSTEM KERNEL. ALL RIGHTS RESERVED.</span>
+        </div>
+
+        <div id="modal-container" class="hidden">
+            <div id="modal-backdrop"></div>
+            
+            <div id="modal-tutorial" class="modal-content hidden">
+                <div class="modal-header">
+                    <h2 data-i18n="tut_title">HOW_TO_PLAY.DOC</h2>
+                    <button class="btn-close-modal">X</button>
+                </div>
+                <div class="modal-body scrollable">
+                    <section>
+                        <h3 data-i18n="tut_h1">1. BASIC CONTROLS</h3>
+                        <p data-i18n="tut_p1">Interact using cursor/touch. Double-tap icons to initialize. Drag window headers.</p>
+                    </section>
+                    <section>
+                        <h3 data-i18n="tut_h2">2. SURVIVAL MECHANICS</h3>
+                        <p data-i18n="tut_p2">Close anomalous windows. Choose your words carefully when it speaks.</p>
+                    </section>
+                    <section>
+                        <h3 data-i18n="tut_h3">3. THE TERMINAL</h3>
+                        <p data-i18n="tut_p3">Watch terminal.exe. The system will attempt communication.</p>
+                    </section>
+                    <section>
+                        <h3 data-i18n="tut_h4">4. HOW TO WIN</h3>
+                        <p data-i18n="tut_p4">Survive until the "FINAL CHOICE".</p>
+                    </section>
+                    <section class="warning-box">
+                        <h3 data-i18n="tut_warn">* IMMERSION WARNING *</h3>
+                        <p data-i18n="tut_warn_p">Do not trust the interface. Headphones recommended.</p>
+                    </section>
+                </div>
+            </div>
+
+            <div id="modal-settings" class="modal-content hidden">
+                <div class="modal-header">
+                    <h2 data-i18n="set_title">SYSTEM CONFIGURATION</h2>
+                    <button class="btn-close-modal">X</button>
+                </div>
+                <div class="modal-body scrollable">
+                    <div class="setting-row">
+                        <label data-i18n="set_lang">LANGUAGE</label>
+                        <button class="toggle-btn active" id="set-language" style="color:var(--color-accent-green); border-color:var(--color-accent-green);">ENGLISH</button>
+                    </div>
+                    <div class="setting-row">
+                        <label data-i18n="set_vol_m">MASTER VOLUME</label>
+                        <div class="slider-group">
+                            <input type="range" id="set-vol-master" min="0" max="100" value="70">
+                            <span id="val-master" class="val-display">70%</span>
+                        </div>
+                    </div>
+                    <div class="setting-row">
+                        <label data-i18n="set_vol_a">AMBIENT AUDIO</label>
+                        <div class="slider-group">
+                            <input type="range" id="set-vol-ambient" min="0" max="100" value="80">
+                            <span id="val-ambient" class="val-display">80%</span>
+                        </div>
+                    </div>
+                    <div class="setting-row">
+                        <label data-i18n="set_text_sp">TEXT SPEED</label>
+                        <button class="toggle-btn" id="set-text-speed">NORMAL</button>
+                    </div>
+                    <div class="setting-row">
+                        <label data-i18n="set_fx">VISUAL EFFECTS</label>
+                        <button class="toggle-btn active" id="set-effects">ENABLED</button>
+                    </div>
+                    <div class="setting-row">
+                        <label data-i18n="set_fs">FULLSCREEN</label>
+                        <button class="toggle-btn" id="set-fullscreen">DISABLED</button>
+                    </div>
+                </div>
+            </div>
+
+            <div id="modal-credits" class="modal-content hidden">
+                <div class="modal-header">
+                    <h2 data-i18n="cred_title">ATTRIBUTION</h2>
+                    <button class="btn-close-modal">X</button>
+                </div>
+                <div class="modal-body center-text credits-body scrollable">
+                    <p class="text-muted" data-i18n="cred_dev">DEVELOPED BY</p>
+                    <p class="credit-name">
+                        <a href="https://www.youtube.com/@ChickenBlackST" target="_blank" class="credit-link">CHICKEN BLACK ST</a>
+                    </p>
+                    <br>
+                    <p class="text-muted" data-i18n="cred_arch">SYSTEM ARCHITECTURE</p>
+                    <p class="credit-name">HTML / CSS / VANILLA JS</p>
+                    <br>
+                    <p class="text-muted" data-i18n="cred_thanks">SPECIAL THANKS</p>
+                    <p class="credit-name" id="credit-you" data-i18n="cred_user">THE USER</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="intro-cinematic" class="view-state hidden">
+        <div id="intro-monitor">
+            <div id="intro-screen"></div>
+        </div>
+    </div>
+
+    <div id="boot-screen" class="view-state hidden">
+        <div id="boot-terminal"></div>
+    </div>
+
+    <div id="os-workspace" class="view-state hidden">
+        <div id="desktop-environment">
+            <div class="desktop-icon" data-exec="readme">
+                <div class="icon-sprite doc-icon"></div>
+                <div class="icon-label" data-i18n="icon_read">readme.txt</div>
+            </div>
+            <div class="desktop-icon" data-exec="logs">
+                <div class="icon-sprite folder-icon"></div>
+                <div class="icon-label" data-i18n="icon_log">sys_logs</div>
+            </div>
+            <div class="desktop-icon" data-exec="terminal">
+                <div class="icon-sprite term-icon"></div>
+                <div class="icon-label" data-i18n="icon_term">terminal.exe</div>
+            </div>
+            <div class="desktop-icon" data-exec="trash">
+                <div class="icon-sprite trash-icon"></div>
+                <div class="icon-label" data-i18n="icon_trash" id="lbl-trash">Recycle Bin</div>
+            </div>
+            
+            <div id="window-manager"></div>
+        </div>
+
+        <div id="taskbar">
+            <button id="taskbar-start" data-i18n="task_start">SYS_START</button>
+            <div id="taskbar-processes"></div>
+            <div id="taskbar-clock">00:00</div>
+        </div>
+    </div>
+
+    <div id="ending-sequence" class="view-state hidden">
+        <div id="ending-message"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
